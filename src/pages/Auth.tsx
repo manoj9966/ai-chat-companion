@@ -54,7 +54,14 @@ export default function Auth() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (error) {
-      toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
+      const msg = error.message?.toLowerCase() ?? "";
+      let description = error.message;
+      if (msg.includes("invalid login")) {
+        description = "Incorrect email or password. If you originally signed up with Google, please use the Google button below.";
+      } else if (msg.includes("email not confirmed")) {
+        description = "Please confirm your email address before signing in.";
+      }
+      toast({ title: "Sign in failed", description, variant: "destructive" });
       return;
     }
     toast({ title: "Welcome back!", description: "You are now signed in." });
@@ -76,7 +83,12 @@ export default function Auth() {
     });
     setBusy(false);
     if (error) {
-      toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
+      const msg = error.message?.toLowerCase() ?? "";
+      let description = error.message;
+      if (msg.includes("already registered") || msg.includes("user already")) {
+        description = "An account with this email already exists. Please sign in instead, or use Google if you originally signed up with Google.";
+      }
+      toast({ title: "Sign up failed", description, variant: "destructive" });
       return;
     }
     toast({ title: "Account created!", description: "You can now start chatting with Mano." });
