@@ -14,7 +14,7 @@ const Index = () => {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Sparkles className="h-4 w-4" />
           </div>
-          <h1 className="text-base font-semibold tracking-tight">AI Chatbot</h1>
+          <h1 className="text-base font-semibold tracking-tight">Andf</h1>
         </div>
         <Button
           variant="ghost"
