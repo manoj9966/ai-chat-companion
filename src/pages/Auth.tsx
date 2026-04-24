@@ -50,7 +50,8 @@ export default function Auth() {
       return;
     }
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword(parsed.data);
+    const { email, password } = parsed.data;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (error) {
       toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
@@ -67,8 +68,10 @@ export default function Auth() {
       return;
     }
     setBusy(true);
+    const { email, password } = parsed.data;
     const { error } = await supabase.auth.signUp({
-      ...parsed.data,
+      email,
+      password,
       options: { emailRedirectTo: `${window.location.origin}/` },
     });
     setBusy(false);
